@@ -13,9 +13,7 @@ def main():
     config_file = args.config
     output_file = args.output
     log_file = args.log_file
-
-    # Edge case handling
-
+    
     if not os.path.exists(input_file):
         print(f"Error: Input file '{input_file}' does not exist.")
         return
