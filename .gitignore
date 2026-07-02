@@ -16,3 +16,9 @@ dist/
 *.egg-info/
 metrics.json
 run.log
+.DS_Store
+Thumbs.db
+Desktop.ini
+decision.txt
+MEMORY.md
+COPILOT.md

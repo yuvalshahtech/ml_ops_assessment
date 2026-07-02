@@ -1,13 +1,29 @@
 # ML-OPS Assessment
 
-This repository is a small, deterministic Python batch-processing assessment. The main entry point is `run.py`, which accepts a CSV input file, a YAML config file, and output paths for metrics and logs.
+This repository is a deterministic Python batch-processing assessment. The main entry point is `run.py`, which accepts a CSV input file, a YAML config file, and output paths for metrics and logs.
 
-## What it does
+## Purpose
 
-The project is designed to:
+The project is intentionally small and explicit. It is meant to show basic MLOps-style engineering discipline rather than build a production trading system.
+
+## Deliberate Decisions
+
+The implementation choices behind this project are intentional and are part of the design:
+
+- Default CLI arguments are provided so the program still works when the user does not pass paths explicitly.
+- YAML is validated before use, instead of assuming the file is well formed.
+- Validation checks the actual values, not just the presence of keys.
+- Empty YAML files are rejected clearly.
+- Non-dictionary YAML content is handled carefully, including a best-effort conversion when possible.
+- Edge cases are treated as first-class cases rather than afterthoughts.
+
+## Behavior
+
+The current code path is designed to:
 
 - load configuration from YAML
 - validate the required config keys: `seed`, `window`, and `version`
+- validate config values before processing
 - load OHLCV data from CSV
 - validate the input data before processing
 - compute a rolling mean over the `close` column
@@ -18,6 +34,7 @@ The project is designed to:
 ## Files
 
 - `run.py` - command-line entry point
+- `validate_config.py` - YAML loading and validation helper
 - `config.yaml` - YAML configuration file
 - `data.csv` - sample input data
 - `requirements.txt` - Python dependencies
@@ -43,11 +60,13 @@ version: "1.0"
 
 ## Run
 
-Use the required CLI shape:
+Use the default CLI shape:
 
 ```bash
 python run.py --input data.csv --config config.yaml --output metrics.json --log-file run.log
 ```
+
+Because default arguments are built in, the command can also be run without passing every flag explicitly.
 
 ## Outputs
 
