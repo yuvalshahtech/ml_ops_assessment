@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+from process_data import process_data
 from validate_config import load_and_validate_config
 from validate_data import load_and_validate_data
 
@@ -40,6 +41,7 @@ def main():
     except Exception as e:
         print(f"Unexpected Error: {e}")
         sys.exit(1)
+    processed_data = process_data(data, config["window"])
 
     print(f"Input value: {input_file}")
     print(f"Config value: {config_file}")
@@ -47,6 +49,7 @@ def main():
     print(f"Log file value: {log_file}")
     print(f"Config contents: {config}")
     print(f"Data contents: {data.head()}")  # Print first few rows of the data
+    print(f"Processed data contents: {processed_data.head()}")  # Print first few rows of the processed data
 
 if __name__ == "__main__":
     main()

@@ -19,6 +19,7 @@ The implementation choices behind this project are intentional and are part of t
 - Column names are normalized before validation so CSV variations are handled consistently.
 - Configuration loading and dataset validation are separated into distinct error paths to make debugging easier.
 - A single-column CSV with comma-separated values is handled more defensively.
+- The rolling mean uses all available observations until the configured window is reached, so early rows are still meaningful.
 
 ## Behavior
 
@@ -29,7 +30,7 @@ The current code path is designed to:
 - validate config values before processing
 - load OHLCV data from CSV
 - validate the input data before processing
-- compute a rolling mean over the `close` column
+- compute a rolling mean over the `close` column with `min_periods=1`
 - generate binary trading signals
 - write structured metrics to JSON
 - write detailed execution logs
@@ -37,6 +38,7 @@ The current code path is designed to:
 ## Files
 
 - `run.py` - command-line entry point
+- `process_data.py` - rolling mean and signal generation logic
 - `validate_config.py` - YAML loading and validation helper
 - `config.yaml` - YAML configuration file
 - `data.csv` - sample input data
