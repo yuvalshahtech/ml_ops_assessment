@@ -2,6 +2,8 @@
 
 This repository is a deterministic Python batch-processing assessment. The main entry point is `run.py`, which accepts a CSV input file, a YAML config file, and output paths for metrics and logs.
 
+Current snapshot: v0.5.
+
 ## Purpose
 
 The project is intentionally small and explicit. It is meant to show basic MLOps-style engineering discipline rather than build a production trading system.
@@ -20,6 +22,7 @@ The implementation choices behind this project are intentional and are part of t
 - Configuration loading and dataset validation are separated into distinct error paths to make debugging easier.
 - A single-column CSV with comma-separated values is handled more defensively.
 - The rolling mean uses all available observations until the configured window is reached, so early rows are still meaningful.
+- Metrics are built for both success and failure flows, and the run only hard-fails when metrics cannot be written to disk.
 
 ## Behavior
 
@@ -32,14 +35,17 @@ The current code path is designed to:
 - validate the input data before processing
 - compute a rolling mean over the `close` column with `min_periods=1`
 - generate binary trading signals
-- write structured metrics to JSON
-- write detailed execution logs
+- build structured metrics for both success and error outcomes
+- write metrics to the configured output path
+- fail explicitly if metrics writing itself fails
 
 ## Files
 
 - `run.py` - command-line entry point
+- `metrics.py` - success/error metrics builders
 - `process_data.py` - rolling mean and signal generation logic
 - `validate_config.py` - YAML loading and validation helper
+- `validate_data.py` - CSV loading and validation helper
 - `config.yaml` - YAML configuration file
 - `data.csv` - sample input data
 - `requirements.txt` - Python dependencies
@@ -78,6 +84,7 @@ Because default arguments are built in, the command can also be run without pass
 The application is expected to produce:
 
 - `metrics.json`
-- `run.log`
+
+If output writing fails, the process exits with a non-zero status.
 
 These generated files are ignored by git so they do not get committed accidentally.

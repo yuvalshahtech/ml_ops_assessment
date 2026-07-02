@@ -15,6 +15,7 @@ build/
 dist/
 *.egg-info/
 metrics.json
+metrics_tmp.json
 run.log
 .DS_Store
 Thumbs.db

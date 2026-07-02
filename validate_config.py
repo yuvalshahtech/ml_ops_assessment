@@ -1,10 +1,11 @@
 import numpy as np
 import yaml
-
 def load_and_validate_config(config_file):
     try:
         with open(config_file, "r") as f:
             config = yaml.safe_load(f)
+    except FileNotFoundError:
+        raise ValueError(f"Config file '{config_file}' not found.")
     except yaml.YAMLError as e:
         raise ValueError(
             f"Invalid YAML syntax in '{config_file}'. "

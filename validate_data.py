@@ -10,6 +10,8 @@ def load_and_validate_data(input_file):
             split_data = data.iloc[:, 0].str.split(",", expand=True)
             split_data.columns = column_names
             data = split_data
+    except FileNotFoundError:
+        raise ValueError(f"Input file '{input_file}' not found.")
     except pd.errors.EmptyDataError:
         raise ValueError(f"Input file '{input_file}' is empty.")
     except pd.errors.ParserError as e:
