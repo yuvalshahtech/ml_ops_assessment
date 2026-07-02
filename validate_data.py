@@ -1,5 +1,4 @@
 import pandas as pd
-#AFTER LOADING THE DATA, CHECK IF THE DATA ONLY HAS ONE ROW, IF SO CHECK IF IT HAS COMMAS, IF IT HAS COMMAS USE THEN AS SEPARATE COLUMNS, AND ALSO SPLIT THE DATA BASED ON THAT
 def load_and_validate_data(input_file):
     if not input_file.lower().endswith('.csv'):
         raise ValueError(f"Input file '{input_file}' must have a .csv extension.")

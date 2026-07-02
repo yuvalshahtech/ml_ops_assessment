@@ -14,12 +14,7 @@ htmlcov/
 build/
 dist/
 *.egg-info/
-metrics.json
-metrics_tmp.json
-run.log
 .DS_Store
 Thumbs.db
 Desktop.ini
 decision.txt
-MEMORY.md
-COPILOT.md
