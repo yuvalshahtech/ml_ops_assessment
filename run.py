@@ -1,9 +1,8 @@
 import argparse
 import os
 import sys
-import numpy as np
-import yaml
 from validate_config import load_and_validate_config
+from validate_data import load_and_validate_data
 
 def main():
     parser = argparse.ArgumentParser()
@@ -33,12 +32,21 @@ def main():
     except Exception as e:
         print(f"Unexpected Error: {e}")
         sys.exit(1)
+    try:
+        data = load_and_validate_data(input_file)
+    except ValueError as e:
+        print(f"Data Validation Error: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Unexpected Error: {e}")
+        sys.exit(1)
 
     print(f"Input value: {input_file}")
     print(f"Config value: {config_file}")
     print(f"Output value: {output_file}")
     print(f"Log file value: {log_file}")
     print(f"Config contents: {config}")
+    print(f"Data contents: {data.head()}")  # Print first few rows of the data
 
 if __name__ == "__main__":
     main()

@@ -15,7 +15,10 @@ The implementation choices behind this project are intentional and are part of t
 - Validation checks the actual values, not just the presence of keys.
 - Empty YAML files are rejected clearly.
 - Non-dictionary YAML content is handled carefully, including a best-effort conversion when possible.
-- Edge cases are treated as first-class cases rather than afterthoughts.
+- The dataset is checked for emptiness and for header-only input before processing.
+- Column names are normalized before validation so CSV variations are handled consistently.
+- Configuration loading and dataset validation are separated into distinct error paths to make debugging easier.
+- A single-column CSV with comma-separated values is handled more defensively.
 
 ## Behavior
 
